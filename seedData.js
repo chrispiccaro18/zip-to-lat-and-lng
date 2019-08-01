@@ -1,3 +1,4 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 const connect = require('./lib/utils/connect');
 const { rawData } = require('./lib/services/raw-data');
@@ -6,16 +7,16 @@ const ZipAndLatLng = require('./lib/models/ZipAndLatLng');
 
 connect(process.env.MONGODB_URI);
 
-mongoose.connection.dropDatabase()
-  .then(() => {
-    rawData()
-      .then(data => {
-        return stringToObject(data);
-      })
-      .then(cleanData => {
-        cleanData.forEach(zip => {
-          ZipAndLatLng.create(zip);
-        });
-      });
-  })
-  .then(() => mongoose.connection.close());
+const seedData = async() => {
+  await mongoose.connection.dropDatabase();
+  const dirtyData = await rawData();
+  const cleanData = await stringToObject(dirtyData);
+
+  for(let i = 0; i < cleanData.length; i++) {
+    await ZipAndLatLng.create(cleanData[i]);
+  }
+
+  mongoose.connection.close();
+};
+
+seedData();
