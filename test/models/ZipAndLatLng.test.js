@@ -4,23 +4,22 @@ const mongoose = require('mongoose');
 const ZipAndLatLng = require('../../lib/models/ZipAndLatLng');
 
 describe('ZipAndLatLng model', () => {
-  it('has a zip, lat, and lng', () => {
+  it('has a zip, lat, and lng', async() => {
     const zipAndLatLng = new ZipAndLatLng({
-      zip: '06830',
-      lat: '12.124234',
-      lng: '-67.0999'
+      zip: 'test zip',
+      lat: 'test lat',
+      lng: 'test lng'
     });
 
     expect(zipAndLatLng.toJSON()).toEqual({
       _id: expect.any(mongoose.Types.ObjectId),
-      zip: '06830',
-      lat: '12.124234',
-      lng: '-67.0999'
+      zip: 'test zip',
+      lat: 'test lat',
+      lng: 'test lng'
     });
-
   });
   
-  it('has a required zip, lat, and lng', () => {
+  it('has a required zip, lat, and lng', async() => {
     const zipAndLatLng = new ZipAndLatLng({});
 
     const errors = zipAndLatLng.validateSync().errors;
