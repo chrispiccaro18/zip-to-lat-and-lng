@@ -8,7 +8,7 @@ describe('zip routes', () => {
       .get('/api/v1/zip/06820');
 
     expect(res.body).toEqual({
-      _id: '5d432eb2536bf34e708d05f8',
+      _id: expect.any(String),
       __v: 0,
       zip: '06820',
       lat: '41.076202',
