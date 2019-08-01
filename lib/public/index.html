@@ -12,7 +12,22 @@
   </header>
   <main>
     <h2>Usage:</h2>
-    <p></p>
+    <h3>GET</h3>
+    <p>/api/v1/zip/${zip-code}</p>
+
+    <h2>Example:</h2>
+    <h3>URL:</h3>
+    <a href="https://zip-to-lat-and-lng.herokuapp.com/api/v1/zip/06820">https://zip-to-lat-and-lng.herokuapp.com/api/v1/zip/06820</a>
+    <h3>Response:</h3>
+    <pre>
+      {
+        "lat": "41.076202",
+        "lng": "-73.480080"
+      }
+    </pre>
+
+    <h2>Note:</h2>
+    <p>Invalid zip-codes will return an empty object: <code>{}</code></p>
   </main>
 </body>
 </html>
