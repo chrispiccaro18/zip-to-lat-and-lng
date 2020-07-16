@@ -9,18 +9,6 @@ const server = app.listen(PORT, () => {
   console.log(`listening on ${PORT}`);
 });
 
-// you need this code so node will watch for exit signals
-// node by default doesn't handle SIGINT/SIGTERM
-// docker containers use SIGINT and SIGTERM to properly exit
-//
-// signals also aren't handeled by npm:
-// https://github.com/npm/npm/issues/4603
-// https://github.com/npm/npm/pull/10868
-// https://github.com/RisingStack/kubernetes-graceful-shutdown-example/blob/master/src/index.js
-// if you want to use npm then start with `docker run --init` to help, but I still don't think it's
-// a graceful shutdown of node process, just a forced exit
-//
-
 // shut down server
 function shutdown() {
   // NOTE: server.close is for express based apps
