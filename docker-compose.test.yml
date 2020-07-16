@@ -1,32 +1,31 @@
 version: '2.4'
 
 services:
-  zip:
+  test-zip:
     # image: node:10.21.0-alpine3.11
     init: true
     build:
       context: .
-      target: dev
+      target: test
     ports: 
       - 8080:8080
-      - 9229:9229
     depends_on:
-      mongo:
+      test-mongo:
         condition: service_healthy
     volumes: 
       - .:/app/zip:delegated
       - /app/zip/node_modules
     environment: 
-      - MONGODB_URI=mongodb://mongo:27017/zip
+      - MONGODB_URI=mongodb://test-mongo:27017/test-zip
 
-  mongo:
+  test-mongo:
     image: mongo:server
     ports:
       - 27017:27017
     volumes: 
-      - mongo-db:/data/db
+      - test-mongo-db:/data/db
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
 
 volumes: 
-  mongo-db:
+  test-mongo-db:

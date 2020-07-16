@@ -1,7 +1,6 @@
 FROM node:10.21.0-alpine3.11 as base
 
 EXPOSE 8080
-EXPOSE 9229
 
 ENV NODE_ENV=production
 
@@ -13,7 +12,8 @@ COPY package*.json ./
 
 # just production deps
 # we use npm ci here so only the package-lock.json file is used
-RUN npm ci \
+RUN npm config list \
+    && npm ci \
     && npm cache clean --force
 
 # stage 2 dev
@@ -23,18 +23,37 @@ ENV NODE_ENV=development
 
 ENV PATH=/app/node_modules/.bin:$PATH
 
+WORKDIR /app
+
 RUN npm install --only=development
 
 WORKDIR /app/zip
 
 CMD [ "nodemon", "--inspect=0.0.0.0:9229", "server.js" ]
 
-# stage 3 prod
-FROM base as prod
+## Stage 3 (copy in source)
+FROM base as source
 
 WORKDIR /app/zip
 
 COPY . .
+
+# stage 4 test
+FROM source as test
+
+ENV NODE_ENV=test
+ENV PATH=/app/node_modules/.bin:$PATH
+
+COPY --from=dev /app/node_modules /app/node_modules
+
+RUN eslint .
+
+RUN npm test
+
+CMD ["npm", "run", "int-test"] 
+
+# stage 5 prod
+FROM source as prod
 
 # RUN node seedData.js
 
