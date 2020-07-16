@@ -1,0 +1,29 @@
+version: '2.4'
+
+services:
+  zip:
+    # image: node:10.21.0-alpine3.11
+    init: true
+    build:
+      context: .
+      target: dev
+    ports: 
+      - 8080:8080
+      - 9229:9229
+    depends_on:
+      - mongo
+    volumes: 
+      - .:/app/zip:delegated
+      - /app/zip/node_modules
+    environment: 
+      - MONGODB_URI=mongodb://mongo:27017/zip
+
+  mongo:
+    image: mongo:server
+    ports:
+      - 27017:27017
+    volumes: 
+      - mongo-db:/data/db
+
+volumes: 
+  mongo-db:

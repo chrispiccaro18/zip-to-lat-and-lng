@@ -7,7 +7,7 @@
     "test": "jest --verbose --runInBand",
     "test:watch": "npm run test -- --watch",
     "start": "node server.js",
-    "start:watch": "nodemon server.js",
+    "start:watch": "nodemon --inspect=0.0.0.0:9229 server.js",
     "init": "node seedData.js"
   },
   "jest": {
