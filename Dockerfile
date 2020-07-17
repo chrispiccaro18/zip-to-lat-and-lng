@@ -4,8 +4,6 @@ EXPOSE 8080
 
 ENV NODE_ENV=production
 
-# ENV MONGODB_URI=mongodb://0.0.0.0:27017/zip-to-lat-and-lng
-
 WORKDIR /app
 
 COPY package*.json ./
@@ -47,10 +45,6 @@ ENV PATH=/app/node_modules/.bin:$PATH
 COPY --from=dev /app/node_modules /app/node_modules
 
 RUN eslint .
-
-RUN npm test
-
-CMD ["npm", "run", "int-test"] 
 
 # stage 5 prod
 FROM source as prod

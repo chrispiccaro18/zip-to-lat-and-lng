@@ -1,8 +1,8 @@
+# docker-compose -f docker-compose.test.yml up --build --exit-code-from test-zip
 version: '2.4'
 
 services:
   test-zip:
-    # image: node:10.21.0-alpine3.11
     init: true
     build:
       context: .
@@ -17,6 +17,7 @@ services:
       - /app/zip/node_modules
     environment: 
       - MONGODB_URI=mongodb://test-mongo:27017/test-zip
+    command: ["npm", "test"]
 
   test-mongo:
     image: mongo:server

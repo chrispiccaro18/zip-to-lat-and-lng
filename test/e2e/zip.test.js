@@ -1,6 +1,15 @@
 require('../connect-db');
 const request = require('supertest');
 const app = require('../../lib/app');
+const ZipAndLatLng = require('../../lib/models/ZipAndLatLng');
+
+beforeAll(async() => {
+  await ZipAndLatLng.create({
+    zip: '06820',
+    lat: '41.076202',
+    lng: '-73.480080'
+  });
+});
 
 describe('zip routes', () => {
   it('returns an object with zip, lat, and lng, when given a zip', async() => {
