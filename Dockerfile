@@ -1,4 +1,4 @@
-FROM node:10.21.0-alpine3.11 as base
+FROM node:23-alpine3.19 as base
 
 EXPOSE 8080
 

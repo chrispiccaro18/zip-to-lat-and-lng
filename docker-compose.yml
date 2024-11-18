@@ -1,5 +1,5 @@
 # docker-compose up --build
-version: '2.4'
+# version: '2.4'
 
 services:
   zip:
@@ -20,7 +20,7 @@ services:
       - MONGODB_URI=mongodb://mongo:27017/zip
 
   mongo:
-    image: mongo:server
+    image: mongo
     ports:
       - 27017:27017
     volumes: 
